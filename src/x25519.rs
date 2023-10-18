@@ -13,7 +13,7 @@ pub type X25519KeyPair = AsymmetricKey<PublicKey, StaticSecret>;
 
 impl Generate for X25519KeyPair {
     fn new_with_seed(seed: &[u8]) -> Self {
-        let secret_seed = generate_seed(&seed.to_vec()).expect("invalid seed");
+        let secret_seed = generate_seed(seed).expect("invalid seed");
 
         let sk = StaticSecret::from(secret_seed);
         let pk: PublicKey = (&sk).try_into().expect("invalid public key");
@@ -117,7 +117,6 @@ impl DIDCore for X25519KeyPair {
                 }),
                 false => None,
             },
-            ..Default::default()
         }]
     }
 
